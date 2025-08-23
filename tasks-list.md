@@ -30,11 +30,11 @@
 - `app/api/billing/subscribe/route.ts` - Create payment (Midtrans) transaction.
 - `app/api/billing/webhook/route.ts` - Midtrans webhook to update subscription status.
 - `app/api/metrics/ingest/route.ts` - Internal metrics collector (server-side only).
-- `lib/db/mongoose.ts` - Mongoose client connection helper for server runtime.
-- `lib/db/models/User.ts` - User schema/model.
-- `lib/db/models/Event.ts` - Event schema/model.
-- `lib/db/models/Guest.ts` - Guest schema/model.
-- `lib/db/models/Subscription.ts` - Subscription schema/model storing plan and status.
+- `src/lib/db/mongoose.ts` - Mongoose client connection helper for server runtime.
+- `src/lib/db/models/User.ts` - User schema/model with email verification and timestamps.
+- `src/lib/db/models/Event.ts` - Event schema/model with owner reference, guest counts, and activity status.
+- `src/lib/db/models/Guest.ts` - Guest schema/model with check-in status, RSVP status, and unique tokens.
+- `src/lib/db/models/Subscription.ts` - Subscription schema/model storing plan type, status, and transaction references.
 - `lib/auth/otp.ts` - Generate/store/validate OTPs (short-lived tokens).
 - `lib/auth/session.ts` - Minimal session handling (signed cookies/JWT) post-verify.
 - `lib/mail/mailgun.ts` - Mailgun client and send helpers.
@@ -71,10 +71,9 @@
   - [x] 1.1 Create Next.js (App Router) project with TypeScript; add ESLint/Prettier configs.
   - [x] 1.2 Add Jest + testing-library setup for unit/API route tests.
   - [x] 1.3 Configure environment variable management and `.env.example`.
-  - [ ] 1.4 Add Sentry or basic error logging (optional for MVP).
 
 - [ ] 2.0 Data Modeling (MongoDB/Mongoose)
-  - [ ] 2.1 Implement `User`, `Event`, `Guest`, and `Subscription` schemas/models.
+  - [x] 2.1 Implement `User`, `Event`, `Guest`, `Plan`, and `Subscription` schemas/models.
   - [ ] 2.2 Add indexes for common queries (event by owner, guests by event, email unique).
   - [ ] 2.3 Provide seed scripts or fixtures for local testing (optional).
 

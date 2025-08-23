@@ -17,6 +17,8 @@
     "test:ci": "jest --ci --coverage --watchAll=false"
   },
   "dependencies": {
+    "@types/mongoose": "^5.11.96",
+    "mongoose": "^8.18.0",
     "next": "15.5.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
