@@ -52,12 +52,6 @@ const envSchema = z.object({
   QR_CODE_SIZE: z.coerce.number().default(200),
   QR_CODE_ERROR_CORRECTION: z.enum(['L', 'M', 'Q', 'H']).default('M'),
 
-  // Monitoring & Logging
-  SENTRY_DSN: z.string().url().optional(),
-  SENTRY_ENVIRONMENT: z.string().default('development'),
-  LOG_LEVEL: z.enum(['error', 'warn', 'info', 'debug']).default('info'),
-  LOG_FORMAT: z.enum(['json', 'pretty']).default('pretty'),
-
   // Internal Analytics
   METRICS_ENABLED: z.coerce.boolean().default(true),
   METRICS_ENDPOINT: z.string().default('/api/metrics/ingest'),
@@ -87,11 +81,11 @@ function validateEnv() {
     return envSchema.parse(process.env);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const missingVars = error.errors?.map(err => {
+      const missingVars = (error as z.ZodError).issues.map(err => {
         const path = err.path.join('.');
         const message = err.message;
         return `${path}: ${message}`;
-      }) || ['Unknown validation error'];
+      });
 
       console.error('❌ Environment validation failed:');
       console.error(missingVars.join('\n'));

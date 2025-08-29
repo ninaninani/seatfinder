@@ -3,7 +3,9 @@ import mongoose from 'mongoose';
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
-  throw new Error('Please define the MONGODB_URI environment variable inside .env.local');
+  throw new Error(
+    'Please define the MONGODB_URI environment variable inside .env.local'
+  );
 }
 
 interface MongooseConnection {
@@ -11,10 +13,17 @@ interface MongooseConnection {
   promise: Promise<typeof mongoose> | null;
 }
 
-let cached: MongooseConnection = (global as any).mongoose || { conn: null, promise: null };
+let cached: MongooseConnection = ((global as Record<string, unknown>)
+  .mongoose as MongooseConnection) || {
+  conn: null,
+  promise: null,
+};
 
 if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+  cached = (global as Record<string, unknown>).mongoose = {
+    conn: null,
+    promise: null,
+  } as MongooseConnection;
 }
 
 export async function connectToDatabase(): Promise<typeof mongoose> {
@@ -27,7 +36,7 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
       bufferCommands: false,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(MONGODB_URI!, opts).then(mongoose => {
       return mongoose;
     });
   }
@@ -43,3 +52,6 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
 }
 
 export default connectToDatabase;
+
+// Alias for backward compatibility
+export const connectDB = connectToDatabase;

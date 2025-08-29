@@ -69,7 +69,7 @@ const createTestUsers = async () => {
 };
 
 // Create test subscriptions
-const createTestSubscriptions = async (users: any[]) => {
+const createTestSubscriptions = async (users: Record<string, unknown>[]) => {
   const subscriptions = [];
 
   // Plan I subscription
@@ -125,7 +125,7 @@ const createTestSubscriptions = async (users: any[]) => {
 };
 
 // Create test events for different scenarios
-const createTestEvents = async (users: any[]) => {
+const createTestEvents = async (users: Record<string, unknown>[]) => {
   const events = [];
 
   // Plan I user event (at limit)
@@ -202,7 +202,7 @@ const createTestEvents = async (users: any[]) => {
 };
 
 // Create test guests for different scenarios
-const createTestGuests = async (events: any[]) => {
+const createTestGuests = async (events: Record<string, unknown>[]) => {
   const guests = [];
 
   // Plan I event guests (at limit)

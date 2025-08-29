@@ -50,7 +50,10 @@ const createUsers = async (count: number = 5) => {
 };
 
 // Generate test events
-const createEvents = async (users: any[], count: number = 10) => {
+const createEvents = async (
+  users: Record<string, unknown>[],
+  count: number = 10
+) => {
   const events = [];
 
   for (let i = 0; i < count; i++) {
@@ -75,7 +78,10 @@ const createEvents = async (users: any[], count: number = 10) => {
 };
 
 // Generate test guests
-const createGuests = async (events: any[], count: number = 100) => {
+const createGuests = async (
+  events: Record<string, unknown>[],
+  count: number = 100
+) => {
   const guests = [];
 
   for (let i = 0; i < count; i++) {
@@ -108,7 +114,10 @@ const createGuests = async (events: any[], count: number = 100) => {
 };
 
 // Generate test subscriptions
-const createSubscriptions = async (users: any[], count: number = 8) => {
+const createSubscriptions = async (
+  users: Record<string, unknown>[],
+  count: number = 8
+) => {
   const subscriptions = [];
   const planTypes = Object.values(PlanType);
   const statuses = Object.values(SubscriptionStatus);

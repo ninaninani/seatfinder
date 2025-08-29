@@ -23,7 +23,7 @@ describe('Environment Configuration', () => {
       'this-is-a-very-long-secret-key-for-testing-purposes';
 
     // Import env module after setting environment variables
-    const { env } = require('./env');
+    const { env } = await import('./env');
 
     expect(env.MONGODB_URI).toBe('mongodb://localhost:27017/test');
     expect(env.JWT_SECRET).toBe(
@@ -32,13 +32,13 @@ describe('Environment Configuration', () => {
     expect(env.NODE_ENV).toBe('test'); // Jest sets NODE_ENV to 'test'
   });
 
-  it('should apply default values for optional variables', () => {
+  it('should apply default values for optional variables', async () => {
     // Set minimal required environment variables
     process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
     process.env.JWT_SECRET =
       'this-is-a-very-long-secret-key-for-testing-purposes';
 
-    const { env } = require('./env');
+    const { env } = await import('./env');
 
     // Check default values
     expect(env.NEXT_PUBLIC_APP_URL).toBe('http://localhost:3000');
@@ -47,7 +47,7 @@ describe('Environment Configuration', () => {
     expect(env.FEATURE_PAYMENT_ENABLED).toBe(true);
   });
 
-  it('should parse numeric environment variables correctly', () => {
+  it('should parse numeric environment variables correctly', async () => {
     // Clear all environment variables first
     Object.keys(process.env).forEach(key => {
       if (key.startsWith('FEATURE_') || key.startsWith('OTP_')) {
@@ -62,59 +62,59 @@ describe('Environment Configuration', () => {
     process.env.FEATURE_PAYMENT_ENABLED = 'false';
     process.env.NODE_ENV = 'development'; // Explicitly set to avoid test environment
 
-    const { env } = require('./env');
+    const { env } = await import('./env');
 
     expect(env.OTP_EXPIRY_MINUTES).toBe(15);
     expect(typeof env.FEATURE_PAYMENT_ENABLED).toBe('boolean');
   });
 
-  it('should throw error when required variables are missing', () => {
+  it('should throw error when required variables are missing', async () => {
     // Remove required variables
     delete process.env.MONGODB_URI;
     delete process.env.JWT_SECRET;
 
-    expect(() => {
-      require('./env');
-    }).toThrow('Environment validation failed');
+    await expect(async () => {
+      await import('./env');
+    }).rejects.toThrow('Environment validation failed');
   });
 
-  it('should throw error when JWT_SECRET is too short', () => {
+  it('should throw error when JWT_SECRET is too short', async () => {
     process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
     process.env.JWT_SECRET = 'too-short'; // Less than 32 characters
 
-    expect(() => {
-      require('./env');
-    }).toThrow('Environment validation failed');
+    await expect(async () => {
+      await import('./env');
+    }).rejects.toThrow('Environment validation failed');
   });
 
-  it('should validate URL format for NEXT_PUBLIC_APP_URL', () => {
+  it('should validate URL format for NEXT_PUBLIC_APP_URL', async () => {
     process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
     process.env.JWT_SECRET =
       'this-is-a-very-long-secret-key-for-testing-purposes';
     process.env.NEXT_PUBLIC_APP_URL = 'not-a-valid-url';
 
-    expect(() => {
-      require('./env');
-    }).toThrow('Environment validation failed');
+    await expect(async () => {
+      await import('./env');
+    }).rejects.toThrow('Environment validation failed');
   });
 
-  it('should validate email format for MAILGUN_FROM_EMAIL', () => {
+  it('should validate email format for MAILGUN_FROM_EMAIL', async () => {
     process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
     process.env.JWT_SECRET =
       'this-is-a-very-long-secret-key-for-testing-purposes';
     process.env.MAILGUN_FROM_EMAIL = 'not-an-email';
 
-    expect(() => {
-      require('./env');
-    }).toThrow('Environment validation failed');
+    await expect(async () => {
+      await import('./env');
+    }).rejects.toThrow('Environment validation failed');
   });
 
-  it('should export helper objects with correct structure', () => {
+  it('should export helper objects with correct structure', async () => {
     process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
     process.env.JWT_SECRET =
       'this-is-a-very-long-secret-key-for-testing-purposes';
 
-    const { features, auth, database } = require('./env');
+    const { features, auth, database } = await import('./env');
 
     // Check features structure
     expect(features).toHaveProperty('payment');
@@ -133,13 +133,13 @@ describe('Environment Configuration', () => {
     expect(database).toHaveProperty('uri');
   });
 
-  it('should export environment type checking helpers', () => {
+  it('should export environment type checking helpers', async () => {
     process.env.MONGODB_URI = 'mongodb://localhost:27017/test';
     process.env.JWT_SECRET =
       'this-is-a-very-long-secret-key-for-testing-purposes';
     process.env.NODE_ENV = 'production';
 
-    const { isDevelopment, isProduction, isTest } = require('./env');
+    const { isDevelopment, isProduction, isTest } = await import('./env');
 
     expect(isDevelopment).toBe(false);
     expect(isProduction).toBe(true);

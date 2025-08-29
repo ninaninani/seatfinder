@@ -32,28 +32,23 @@ const subscriptionSchema = new Schema<ISubscription>(
       type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
-      index: true,
     },
     planType: {
       type: String,
       enum: Object.values(PlanType),
       required: true,
-      index: true,
     },
     status: {
       type: String,
       enum: Object.values(SubscriptionStatus),
       default: SubscriptionStatus.INACTIVE,
-      index: true,
     },
     startDate: {
       type: Date,
       required: true,
-      index: true,
     },
     endDate: {
       type: Date,
-      index: true,
     },
     transactionId: {
       type: String,

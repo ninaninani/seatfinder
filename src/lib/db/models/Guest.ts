@@ -26,7 +26,6 @@ const guestSchema = new Schema<IGuest>(
       type: Schema.Types.ObjectId,
       ref: 'Event',
       required: true,
-      index: true,
     },
     fullName: {
       type: String,
@@ -51,12 +50,10 @@ const guestSchema = new Schema<IGuest>(
       type: String,
       enum: Object.values(RSVPStatus),
       default: RSVPStatus.PENDING,
-      index: true,
     },
     isCheckedIn: {
       type: Boolean,
       default: false,
-      index: true,
     },
     checkedInAt: {
       type: Date,
@@ -66,7 +63,6 @@ const guestSchema = new Schema<IGuest>(
       type: String,
       required: true,
       unique: true,
-      index: true,
     },
   },
   {

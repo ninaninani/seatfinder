@@ -35,6 +35,10 @@
 - `src/lib/db/models/Event.ts` - Event schema/model with owner reference, guest counts, and activity status.
 - `src/lib/db/models/Guest.ts` - Guest schema/model with check-in status, RSVP status, and unique tokens.
 - `src/lib/db/models/Subscription.ts` - Subscription schema/model storing plan type, status, and transaction references.
+- `src/lib/auth/otp.ts` - OTP generation, storage, and validation utility with short-lived tokens.
+- `src/lib/rate-limit.ts` - Rate limiting utility for IP, email, and route-based limiting.
+- `src/lib/mail/mailgun.ts` - Mailgun client and email sending helpers for OTP delivery.
+- `src/app/api/auth/request-otp/route.ts` - API route to create OTP and send via Mailgun with rate limiting.
 - `lib/auth/otp.ts` - Generate/store/validate OTPs (short-lived tokens).
 - `lib/auth/session.ts` - Minimal session handling (signed cookies/JWT) post-verify.
 - `lib/mail/mailgun.ts` - Mailgun client and send helpers.
@@ -78,7 +82,7 @@
   - [x] 2.3 Provide seed scripts or fixtures for local testing (optional).
 
 - [ ] 3.0 Authentication & Email Verification (OTP via Mailgun)
-  - [ ] 3.1 Implement `request-otp` API: rate-limit by IP/email; generate/store OTP; send with Mailgun.
+  - [x] 3.1 Implement `request-otp` API: rate-limit by IP/email; generate/store OTP; send with Mailgun.
   - [ ] 3.2 Implement `verify-otp` API: validate OTP, mark email as verified, create session (cookie/JWT).
   - [ ] 3.3 Build `signup` and `verify` pages and flows; handle error states and retries.
   - [ ] 3.4 Protect dashboard/API routes to require verified session.

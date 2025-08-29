@@ -15,7 +15,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage --watchAll=false",
-    "db:seed": "ts-node src/lib/db/seed.ts",
+    "db:seed": "ts-node --compiler-options '{\"module\":\"commonjs\"}' src/lib/db/seed.ts",
     "db:fixtures": "ts-node src/lib/db/fixtures.ts"
   },
   "dependencies": {
