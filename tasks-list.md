@@ -75,7 +75,7 @@
 - [ ] 2.0 Data Modeling (MongoDB/Mongoose)
   - [x] 2.1 Implement `User`, `Event`, `Guest`, `Plan`, and `Subscription` schemas/models.
   - [x] 2.2 Add indexes for common queries (event by owner, guests by event, email unique).
-  - [ ] 2.3 Provide seed scripts or fixtures for local testing (optional).
+  - [x] 2.3 Provide seed scripts or fixtures for local testing (optional).
 
 - [ ] 3.0 Authentication & Email Verification (OTP via Mailgun)
   - [ ] 3.1 Implement `request-otp` API: rate-limit by IP/email; generate/store OTP; send with Mailgun.
